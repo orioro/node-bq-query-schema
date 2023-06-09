@@ -5,5 +5,7 @@ exports[`public api 1`] = `
   "fmtSchema",
   "buildQuery",
   "sanitizeQueryParams",
+  "queryJobOptions",
+  "runQuery",
 ]
 `;

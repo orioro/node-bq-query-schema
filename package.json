@@ -1,6 +1,6 @@
 {
   "name": "@orioro/bq-query-schema",
-  "version": "0.0.0-semantic-release",
+  "version": "0.0.0",
   "description": "",
   "keywords": [],
   "homepage": "https://github.com/orioro/node-bq-query-schema",
@@ -8,6 +8,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/orioro/node-bq-query-schema.git"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "main": "dist/index.js",
   "module": "dist/index.mjs",

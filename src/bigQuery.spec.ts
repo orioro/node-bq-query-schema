@@ -7,7 +7,7 @@ import { runQuery } from './bigQuery'
 
 dotenv.config()
 
-test('runQuery', () => {
+test.skip('runQuery', () => {
   return runQuery({
     client: new BigQuery(),
     schema: {
