@@ -45,20 +45,13 @@ export type VariableListInput = {
   [key: string]: VariableInput
 }
 
-export type DataSource = {
-  id: string
-  source: string
-  label?: string
-}
-
-export type DataSourceList = {
-  [key: string]: DataSource
-}
-
 type Expression = {
   id: string
-  expression: string
+  value: string
+  type: VariableType
   label?: string
+  auto?: boolean
+  [key: string]: any
 }
 
 export type ExpressionListInput = {
@@ -67,7 +60,8 @@ export type ExpressionListInput = {
     | {
         id?: string
         label?: string
-        expression: string
+        value: string
+        type: VariableType
       }
 }
 
@@ -75,8 +69,17 @@ export type ExpressionList<TExpType = Expression> = {
   [key: string]: TExpType
 }
 
+//
+// SELECT
+//
 export type ValueExpression = Expression
 export type ValueExpressionList = ExpressionList<ValueExpression>
+
+//
+// FROM
+//
+export type DataSourceExpression = Expression
+export type DataSourceExpressionList = ExpressionList<DataSourceExpression>
 
 export type WhereExpression = Expression
 export type WhereExpressionList = ExpressionList<WhereExpression>
@@ -89,21 +92,17 @@ export type OrderByExpressionList = ExpressionList<GroupByExpression>
 
 export type Schema = {
   variables: VariableList
-  dataSources: DataSourceList
+  dataSources: DataSourceExpressionList
   valueExpressions: ValueExpressionList
   whereExpressions: WhereExpressionList
-  groupByExpressions: GroupByExpressionList
-  orderByExpressions: OrderByExpressionList
   limit: number
 }
 
 export type SchemaInput = {
-  variables: VariableList
-  dataSources: DataSourceList
+  variables: VariableListInput
+  dataSources: ExpressionListInput
   valueExpressions?: ExpressionListInput
   whereExpressions?: ExpressionListInput
-  groupByExpressions?: ExpressionListInput
-  orderByExpressions?: ExpressionListInput
   limit?: number
 }
 
@@ -116,10 +115,10 @@ export type QueryGroupBy = string[]
 export type QueryGroupByInput = string | QueryGroupBy
 
 export type QueryWhere = {
-  [key: string]: string[]
+  [key: string]: string | string[] | number | number[]
 }
 export type QueryWhereInput = {
-  [key: string]: string | string[]
+  [key: string]: string | string[] | number | number[]
 }
 
 export type QueryOrderBy = string[]

@@ -1,6 +1,5 @@
 import {
   Schema,
-  QueryParams,
   QuerySelect,
   SchemaInput,
   QueryParamsInput,
@@ -8,53 +7,53 @@ import {
   QueryWhere,
   QueryGroupBy,
   QueryOrderBy,
-} from './types'
-import { sanitizeQueryParams } from './sanitize'
-import { fmtSchema } from './schema'
+} from '../types'
+import { sanitizeQueryParams } from '../sanitize'
+import { fmtSchema } from '../schema'
 
-export function buildSelect(schema: Schema, select: QuerySelect): string {
+function buildSelect(schema: Schema, select: QuerySelect): string {
   const statements = select.map((expressionId) => {
     const valueExpression = schema.valueExpressions[expressionId]
 
-    return `(${valueExpression.expression}) as ${valueExpression.id}`
+    return `(${valueExpression.value}) as \`${valueExpression.id}\``
   })
   return `SELECT ${statements.join(', ')}`
 }
 
-export function buildFrom(schema: Schema, from: QueryFrom): string {
-  return `FROM ${schema.dataSources[from].source}`
+function buildFrom(schema: Schema, from: QueryFrom): string {
+  return `FROM \`${schema.dataSources[from].value}\``
 }
 
-export function buildWhere(schema: Schema, where: QueryWhere): string {
+function buildWhere(schema: Schema, where: QueryWhere): string {
   const statements = Object.keys(where).map((expressionId) => {
     const whereExpression = schema.whereExpressions[expressionId]
 
-    return `(${whereExpression})`
+    return `(${whereExpression.value})`
   })
 
   return `WHERE ${statements.join(' AND ')}`
 }
 
-export function buildGroupBy(schema: Schema, groupBy: QueryGroupBy): string {
+function buildGroupBy(schema: Schema, groupBy: QueryGroupBy): string {
   const statements = groupBy.map((expId) => {
-    const groupByExpression = schema.groupByExpressions[expId]
+    const groupByExpression = schema.valueExpressions[expId]
 
-    return groupByExpression.expression
+    return `\`${groupByExpression.value}\``
   })
   return `GROUP BY ${statements.join(', ')}`
 }
 
-export function buildOrderBy(schema: Schema, orderBy: QueryOrderBy): string {
+function buildOrderBy(schema: Schema, orderBy: QueryOrderBy): string {
   const statements = orderBy.map((expId) => {
-    const orderByExpression = schema.orderByExpressions[expId]
+    const orderByExpression = schema.valueExpressions[expId]
 
-    return orderByExpression.expression
+    return `\`${orderByExpression.id}\``
   })
 
   return `ORDER BY ${statements.join(', ')}`
 }
 
-export function buildLimit(schema: Schema): string {
+function buildLimit(schema: Schema): string {
   return `LIMIT ${schema.limit}`
 }
 

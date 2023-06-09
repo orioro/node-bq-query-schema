@@ -1,6 +1,9 @@
-import resolve from '@rollup/plugin-node-resolve'
-import commonjs from '@rollup/plugin-commonjs'
-import babel from '@rollup/plugin-babel'
+const resolve = require('@rollup/plugin-node-resolve')
+const commonjs = require('@rollup/plugin-commonjs')
+const babel = require('@rollup/plugin-babel')
+// import resolve from '@rollup/plugin-node-resolve'
+// import commonjs from '@rollup/plugin-commonjs'
+// import babel from '@rollup/plugin-babel'
 
 const jsExtensions = ['.mjs', '.js', '.jsx', '.ts', '.tsx', '.json', '.node']
 
@@ -23,6 +26,7 @@ module.exports = {
   ],
 	plugins: [
 		babel({
+			// babelHelpers: 'bundled',
 			babelrc: true,
 			exclude: 'node_modules/**',
 			extensions: jsExtensions
