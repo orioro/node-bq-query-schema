@@ -24,24 +24,25 @@ describe('fmtValueExpressions', () => {
         'varB_min',
         'varB_max',
         'varC',
+        'count_all',
       ])
     )
-    expect(expIds).toHaveLength(7)
+    expect(expIds).toHaveLength(8)
   })
 
   test('with base value', () => {
     const valueExpressions = fmtValueExpressions(
       {
-        count_total: {
+        varBBy100: {
           type: 'continuous',
-          value: 'count(*)',
+          value: 'varB / 100',
         },
       },
       variables
     )
 
     expect(Object.keys(valueExpressions)).toEqual([
-      'count_total',
+      'varBBy100',
       'varA',
       'varB',
       'varB_sum',
@@ -49,13 +50,14 @@ describe('fmtValueExpressions', () => {
       'varB_min',
       'varB_max',
       'varC',
+      'count_all',
     ])
 
-    expect(valueExpressions.count_total).toEqual({
-      id: 'count_total',
-      label: 'count_total',
-      value: 'count(*)',
+    expect(valueExpressions.varBBy100).toEqual({
+      id: 'varBBy100',
+      label: 'varBBy100',
       type: 'continuous',
+      value: 'varB / 100',
     })
   })
 })

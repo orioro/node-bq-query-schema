@@ -86,6 +86,17 @@ function _variableExpressions(variables: VariableList) {
   )
 }
 
+function _commonExpressions() {
+  return {
+    count_all: {
+      id: 'count_all',
+      value: 'count(*)',
+      type: 'continuous',
+      noWhere: true,
+    },
+  }
+}
+
 export function fmtValueExpressions(
   base: ExpressionListInput = {},
   variables: VariableList
@@ -93,5 +104,6 @@ export function fmtValueExpressions(
   return fmtExpressionList<ValueExpression>({
     ...base,
     ..._variableExpressions(variables),
+    ..._commonExpressions(),
   })
 }
