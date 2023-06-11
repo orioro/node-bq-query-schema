@@ -1,6 +1,6 @@
 {
   "name": "@orioro/bq-query-schema",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "",
   "keywords": [],
   "homepage": "https://github.com/orioro/node-bq-query-schema",
@@ -18,7 +18,7 @@
     "test": "jest --collectCoverage",
     "dev": "jest --watch",
     "build": "rm -rf dist && rollup --config ./rollup/build.config.js && yarn tsc:declaration",
-    "prepare": "npm run build && npm run readme",
+    "prepare": "npm run build",
     "readme": "readme",
     "update-dependencies": "npx npm-check-updates -u",
     "tsc:declaration": "tsc --declaration --emitDeclarationOnly --declarationDir dist --rootDir src",
