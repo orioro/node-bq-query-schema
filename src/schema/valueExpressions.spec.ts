@@ -42,7 +42,7 @@ describe('fmtValueExpressions', () => {
     )
 
     expect(Object.keys(valueExpressions)).toEqual([
-      'varBBy100',
+      'count_all',
       'varA',
       'varB',
       'varB_sum',
@@ -50,7 +50,7 @@ describe('fmtValueExpressions', () => {
       'varB_min',
       'varB_max',
       'varC',
-      'count_all',
+      'varBBy100',
     ])
 
     expect(valueExpressions.varBBy100).toEqual({

@@ -70,7 +70,7 @@ export function fmtWhereExpressions(
   valueExpressions: ValueExpressionList
 ) {
   return fmtExpressionList<WhereExpression>({
-    ...base,
     ..._fromValueExpressions(valueExpressions),
+    ...base,
   })
 }

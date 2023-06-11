@@ -102,8 +102,8 @@ export function fmtValueExpressions(
   variables: VariableList
 ): ExpressionList<ValueExpression> {
   return fmtExpressionList<ValueExpression>({
-    ...base,
-    ..._variableExpressions(variables),
     ..._commonExpressions(),
+    ..._variableExpressions(variables),
+    ...base,
   })
 }
