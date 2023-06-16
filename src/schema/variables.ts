@@ -1,23 +1,9 @@
 import {
-  Option,
-  OptionInput,
   Variable,
   VariableInput,
   VariableList,
   VariableListInput,
 } from '../types'
-
-export function fmtOption(optionInput: OptionInput): Option {
-  const option =
-    typeof optionInput === 'string'
-      ? { value: optionInput, label: optionInput }
-      : optionInput
-
-  return {
-    ...option,
-    label: option.label || option.value,
-  }
-}
 
 function fmtVariable(
   variableId: string,
