@@ -12,25 +12,14 @@ export type Variable = {
   [key: string]: any
 }
 
-export type Option = {
-  label?: string
-  value: string
-  [key: string]: any
-}
-
-export type OptionInput = string | Option
-
-export type CategoricalVariable = Variable & {
-  type: 'categorical'
-  options: Option[]
-}
-
 export type VariableList = {
-  [key: string]: Variable | CategoricalVariable
+  [key: string]: Variable
 }
 
 export type VariableInput =
+  | string
   | {
+      id?: string
       type: VariableType
       label?: string
       noSelect?: boolean
@@ -39,7 +28,6 @@ export type VariableInput =
       noOrderBy?: boolean
     }
   | Variable
-  | CategoricalVariable
 
 export type VariableListInput = {
   [key: string]: VariableInput

@@ -1,18 +1,11 @@
 import {
-  CategoricalVariable,
-  ExpressionList,
-  ExpressionListInput,
   Option,
   OptionInput,
-  Schema,
-  SchemaInput,
-  ValueExpressionList,
   Variable,
   VariableInput,
   VariableList,
   VariableListInput,
 } from '../types'
-import { isPlainObject } from 'lodash'
 
 export function fmtOption(optionInput: OptionInput): Option {
   const option =
@@ -26,38 +19,32 @@ export function fmtOption(optionInput: OptionInput): Option {
   }
 }
 
-function fmtVariable(variable: Variable): Variable | CategoricalVariable {
-  switch (variable.type) {
-    case 'categorical': {
-      return {
-        ...variable,
-        options: Array.isArray(variable.options)
-          ? variable.options.map((option) => fmtOption(option))
-          : [],
-      }
-    }
-    case 'continuous': {
-      return variable
-    }
-    default: {
-      throw new Error(`Invalid variable type ${variable.type}`)
-    }
-  }
+function fmtVariable(
+  variableId: string,
+  variableInput: VariableInput
+): Variable {
+  return (
+    typeof variableInput === 'string'
+      ? {
+          id: variableId,
+          label: variableId,
+          type: variableInput,
+        }
+      : {
+          ...(variableInput as { [key: string]: string }),
+          id: variableId,
+          label: variableInput.label || variableId,
+        }
+  ) as Variable
 }
 
 export function fmtVariableList(
   variablesInput: VariableListInput
 ): VariableList {
   return Object.keys(variablesInput).reduce((acc, variableId) => {
-    const variableBase = {
-      id: variableId,
-      label: variablesInput[variableId].label || variableId,
-      ...variablesInput[variableId],
-    }
-
     return {
       ...acc,
-      [variableId]: fmtVariable(variableBase),
+      [variableId]: fmtVariable(variableId, variablesInput[variableId]),
     }
   }, {})
 }

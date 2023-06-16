@@ -1,7 +1,4 @@
-import {
-  fmtVariableList,
-} from './variables'
-import { VariableList } from '../types'
+import { fmtVariableList } from './variables'
 
 describe('fmtVariableList', () => {
   test('basic', () => {
@@ -11,15 +8,14 @@ describe('fmtVariableList', () => {
         varB: { type: 'continuous' },
         varC: {
           type: 'categorical',
-          options: [{ value: 'valueA', label: 'Value A' }],
         },
+        varD: 'continuous',
       })
     ).toEqual({
       varA: {
         id: 'varA',
         label: 'varA',
         type: 'categorical',
-        options: [],
       },
       varB: {
         id: 'varB',
@@ -30,9 +26,12 @@ describe('fmtVariableList', () => {
         id: 'varC',
         label: 'varC',
         type: 'categorical',
-        options: [{ value: 'valueA', label: 'Value A' }],
+      },
+      varD: {
+        id: 'varD',
+        label: 'varD',
+        type: 'continuous',
       },
     })
   })
 })
-
