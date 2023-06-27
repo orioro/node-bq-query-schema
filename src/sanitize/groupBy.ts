@@ -25,15 +25,8 @@ export function sanitizeGroupBy(
 
     const valueExp = schema.valueExpressions[valueExpId]
 
-
     if (!valueExp) {
       throw new Error(`Invalid groupby: ${valueExpId}`)
-    }
-
-    if (valueExp.type !== 'categorical') {
-      throw new Error(
-        `groupby valueExpID must be categorical. Fount: ${valueExpId} - ${valueExp.type}`
-      )
     }
 
     if (valueExp.noGroupBy) {
