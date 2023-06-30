@@ -76,13 +76,14 @@ export type GroupByExpression = Expression
 export type GroupByExpressionList = ExpressionList<GroupByExpression>
 
 export type OrderByExpression = Expression
-export type OrderByExpressionList = ExpressionList<GroupByExpression>
+export type OrderByExpressionList = ExpressionList<OrderByExpression>
 
 export type Schema = {
   variables: VariableList
   dataSources: DataSourceExpressionList
   valueExpressions: ValueExpressionList
   whereExpressions: WhereExpressionList
+  orderByExpressions: OrderByExpressionList
   limit: number
 }
 

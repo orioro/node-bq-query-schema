@@ -18,19 +18,15 @@ export function sanitizeOrderBy(
     return null
   }
 
-  _orderBy.forEach((valueExpId) => {
-    if (typeof valueExpId !== 'string') {
-      throw new TypeError('orderBy valueExpId must be of type string')
+  _orderBy.forEach((expressionId) => {
+    if (typeof expressionId !== 'string') {
+      throw new TypeError('orderBy expressionId must be of type string')
     }
 
-    const valueExp = schema.valueExpressions[valueExpId]
+    const orderByExp = schema.orderByExpressions[expressionId]
 
-    if (!valueExp) {
-      throw new Error(`Invalid groupby: ${valueExpId}`)
-    }
-
-    if (valueExp.noOrderBy) {
-      throw new Error(`groupby operation not allowed on ${valueExpId}`)
+    if (!orderByExp) {
+      throw new Error(`Invalid orderBy: ${expressionId}`)
     }
   })
 

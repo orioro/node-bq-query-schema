@@ -38,16 +38,16 @@ function buildGroupBy(schema: Schema, groupBy: QueryGroupBy): string {
   const statements = groupBy.map((expId) => {
     const groupByExpression = schema.valueExpressions[expId]
 
-    return `\`${groupByExpression.value}\``
+    return `\`${groupByExpression.id}\``
   })
   return `GROUP BY ${statements.join(', ')}`
 }
 
 function buildOrderBy(schema: Schema, orderBy: QueryOrderBy): string {
   const statements = orderBy.map((expId) => {
-    const orderByExpression = schema.valueExpressions[expId]
+    const orderByExpression = schema.orderByExpressions[expId]
 
-    return `\`${orderByExpression.id}\``
+    return orderByExpression.value
   })
 
   return `ORDER BY ${statements.join(', ')}`

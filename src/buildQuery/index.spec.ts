@@ -68,14 +68,14 @@ describe('buildQuery', () => {
         where: {
           varA_in: ['valueAA', 'valueAB'],
           varC_in: [10, 20],
-        }
+        },
       })
     ).toEqual(
       [
         'SELECT (varA) as `varA`, (varC) as `varC`',
         'FROM `sourceB.tableId`',
         'WHERE (varA IN UNNEST (@varA_in)) AND (varC IN UNNEST (@varC_in))',
-        'LIMIT 1000'
+        'LIMIT 1000',
       ].join(' ')
     )
   })
@@ -85,22 +85,42 @@ describe('buildQuery', () => {
       buildQuery(schema, {
         select: ['count'],
         from: 'sourceB',
-        groupBy: ['varB']
+        groupBy: ['varB'],
       })
     ).toEqual(
       'SELECT (count(*)) as `count` FROM `sourceB.tableId` GROUP BY `varB` LIMIT 1000'
     )
   })
 
-  test('orderBy', () => {
+  test('orderBy - simple', () => {
     expect(
       buildQuery(schema, {
         select: ['varA', 'varB'],
         from: 'sourceB',
-        orderBy: ['varB']
+        orderBy: ['varB'],
       })
     ).toEqual(
-      'SELECT (varA) as `varA`, (varB) as `varB` FROM `sourceB.tableId` ORDER BY `varB` LIMIT 1000'
+      'SELECT (varA) as `varA`, (varB) as `varB` FROM `sourceB.tableId` ORDER BY `varB` ASC LIMIT 1000'
     )
+  })
+
+  test('orderBy - desc', () => {
+    expect(
+      buildQuery(schema, {
+        select: ['varA', 'varB'],
+        from: 'sourceB',
+        orderBy: ['varB_desc'],
+      })
+    ).toEqual(
+      'SELECT (varA) as `varA`, (varB) as `varB` FROM `sourceB.tableId` ORDER BY `varB` DESC LIMIT 1000'
+    )
+
+    expect(() => {
+      buildQuery(schema, {
+        select: ['varA', 'varB'],
+        from: 'sourceB',
+        orderBy: ['sum(varC)'],
+      })
+    }).toThrow('Invalid orderBy: sum(varC)')
   })
 })

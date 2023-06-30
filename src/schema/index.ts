@@ -6,6 +6,7 @@ import { fmtExpressionList } from './util'
 import { fmtVariableList } from './variables'
 import { fmtValueExpressions } from './valueExpressions'
 import { fmtWhereExpressions } from './whereExpressions'
+import { fmtOrderByExpressions } from './orderByExpressions'
 
 export function fmtSchema(schemaInput: SchemaInput): Schema {
   if (!isPlainObject(schemaInput)) {
@@ -18,16 +19,20 @@ export function fmtSchema(schemaInput: SchemaInput): Schema {
     variables
   )
   const whereExpressions = fmtWhereExpressions(
-      schemaInput.whereExpressions,
-      valueExpressions
-    )
+    schemaInput.whereExpressions,
+    valueExpressions
+  )
+  const orderByExpressions = fmtOrderByExpressions(valueExpressions)
 
   return {
     ...schemaInput,
     variables,
     valueExpressions,
-    dataSources: fmtExpressionList<DataSourceExpression>(schemaInput.dataSources),
+    dataSources: fmtExpressionList<DataSourceExpression>(
+      schemaInput.dataSources
+    ),
     whereExpressions,
+    orderByExpressions,
     limit: typeof schemaInput.limit === 'number' ? schemaInput.limit : 1000,
   }
 }

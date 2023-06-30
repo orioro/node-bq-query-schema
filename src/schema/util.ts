@@ -9,10 +9,6 @@ export function fmtExpressionList<TExpType>(
       typeof expInput === 'string' ? expInput : expInput.value
     const label = typeof expInput === 'string' ? id : expInput.label || id
 
-    if (id === 'distinctWordCount') {
-      console.log(expInput)
-    }
-
     return {
       ...acc,
       [id]: {
